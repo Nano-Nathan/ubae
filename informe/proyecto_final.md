@@ -1,17 +1,16 @@
 # UBAE - Comparación A* y algoritmo genético
 
-## Integrantes:
-- ### Serrano Cristian
+### Integrantes:
+- Serrano Cristian
+- Espejo Fabricio
 
-- ### Espejo Fabricio
-
-# Tabla de conteido
-- ## [Introducción](#Introduccion)
-- ## [Marco teórico](#Marco_Teorico)
-- ## [Diseño experimental](#Dieseño_Experimental)
-- ## [Análisis y discusión de los resultados](#AyD)
-- ## [Conclusiones finales](#Conclusiones_Finales)
-- ## [Bibliografía](#Bibliografía)
+## Tabla de contenido
+- [Introducción](#Introduccion)
+- [Marco teórico](#Marco_Teorico)
+- [Diseño experimental](#Dieseño_Experimental)
+- [Análisis y discusión de los resultados](#AyD)
+- [Conclusiones finales](#Conclusiones_Finales)
+- [Bibliografía](#Bibliografía)
 
 
 # Introducción
@@ -25,7 +24,6 @@ A partir de esta problemática, hemos decidido crear el proyecto **UBAE** el cua
 Este proyecto se centra en simular la lógica interna del aplicativo UBER aplicando los algoritmos A* y Genético sobre datos reales para luego comparar sus resultados y poder decidir en qué caso aplicar uno u otro dependiendo del contexto en el que nos encontremos.
 
 Hemos elegido este contexto ya que, si bien existen muchos algoritmos que encuentran un camino óptimo (Dijkstra, Prim, BFS, etc.) no poseen un bajo costo de ejecución al momento de aplicarlos en conjuntos grandes de datos. Además, darle _"inteligencia"_ a los algoritmos para que no sea solo una automatización sino que lleguen a _"pensar y deducir"_ hacia donde se encuentra el mejor camino y así decidir la solución es algo que beneficia en gran medida el problema planteado.
-
 # Marco teórico
 # Diseño experimental
 # Análisis y discusión de los resultados
