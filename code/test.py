@@ -1,6 +1,4 @@
-from modules.Graph import Graph
+from a_star import A_Star
+from modules.LinkedList import LinkedList
 
-G = Graph()
-print(G.getConnections(2))
-print(G.getDistance(2, 1))
-print(G.getDistance(1, 2))
+L = LinkedList()
