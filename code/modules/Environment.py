@@ -2,8 +2,9 @@ import json
 import os
 
 
-class Graph:
+class Environment:
     def __init__(self) -> None:
+        print("Obteniendo datos...")
         #Obtiene el path del direcctorio actual
         workingDirectory = os.getcwd()
 
@@ -22,11 +23,14 @@ class Graph:
         dFile.close()
         #tFile.close()
     
-    def getConnections (self, idNode) -> list:
-        idNode = str(idNode)
+    def getConnections (self, idNode: str) -> list:
         return self.coordenadas[idNode]['connections']
     
-    def getDistance (self, idNode1, idNode2) -> int:
-        idNode1 = str(idNode1)
-        idNode2 = str(idNode2)
+    def getDistance (self, idNode1: str, idNode2: str) -> int:
         return self.distancias[idNode1 + "_" + idNode2] if idNode1 + "_" + idNode2 in self.distancias else self.distancias[idNode2 + "_" + idNode1]
+    
+    def getCoordinates (self, idNode: str) -> tuple [int, int]:
+        return int(self.coordenadas[idNode]['x']), int(self.coordenadas[idNode]["y"])
+
+    def getVertex (self, idNode: str):
+        return self.coordenadas[idNode]
