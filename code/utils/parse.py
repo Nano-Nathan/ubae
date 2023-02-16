@@ -35,8 +35,10 @@ while (dLine): #Distancia
     if(not idNode2 + "_" + idNode1 in oDistance):
         oDistance[idNode1 + "_" + idNode2] = int(distance)
         #Agrego conexiones a los nodos
-        oCoordinates[idNode1]["connections"].append(idNode2)
-        oCoordinates[idNode2]["connections"].append(idNode1)
+        if(not idNode2 in oCoordinates[idNode1]["connections"]):
+            oCoordinates[idNode1]["connections"].append(idNode2)
+        if(not idNode1 in oCoordinates[idNode2]["connections"]):
+            oCoordinates[idNode2]["connections"].append(idNode1)
     dLine = dFile.readline()
     
 
