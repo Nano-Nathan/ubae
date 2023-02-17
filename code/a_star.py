@@ -1,4 +1,5 @@
 import math
+import time
 
 from modules.Environment import Environment
 from modules.LinkedList import LinkedList
@@ -25,6 +26,9 @@ class A_Star ():
 
     def execute (self) -> None:
         print("Busando el camino óptimo...")
+        #Tiempo en el que empieza
+        start = time.time()
+
         #Valida si el nodo inicial y destino son el mismo
         if(self.initNode == self.targetNode):
             return
@@ -58,7 +62,10 @@ class A_Star ():
             #self.toVisit.show(True)
 
             #a = input()
-        print("¡Se ha encontrado el camino!")
+        #Tiempo en el que termina la ejecucion
+        end = time.time()
+
+        print("Se ha encontrado el camino en", (end-start) * 10**3, "ms y", self.manager.getTotalStates(), "estados con")
         print(self.manager.getRoad())
 
     def h(self, node: str) -> int:
