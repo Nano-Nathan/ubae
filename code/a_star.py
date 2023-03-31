@@ -22,8 +22,6 @@ class A_Star ():
         #Obtengo las coordenadas del nodo final
         self.targetNodeX, self.targetNodeY = self.Environment.getCoordinates(targetNode)
 
-
-
     def execute (self) -> None:
         print("Busando el camino óptimo...")
         #Tiempo en el que empieza
@@ -44,7 +42,7 @@ class A_Star ():
         while (self.toVisit.lenght() > 0 and currentNode != self.targetNode):
             #Obtengo el proximo nodo a visitar y el costo hasta el
             currentWeight, currentNode, parent = self.toVisit.pop()
-    
+
             #Agrego el nodo al mantenedor
             self.manager.addNode(currentNode, currentWeight, parent)
 
@@ -57,15 +55,12 @@ class A_Star ():
                     if(neighbor != parent):
                         #Heuristica: Camino recorrido desde el inicio + distancia entre 2 puntos
                         weight = currentWeight + self.Environment.getDistance(currentNode, neighbor) + self.h(neighbor)
+                        #Revisa que se encuentre dentro del rango permitido
                         self.toVisit.priorityPushWithDelete(weight, neighbor, currentNode)
-            #print(currentNode + "("+parent+"): " + str(neighbors))
-            #self.toVisit.show(True)
-
-            #a = input()
         #Tiempo en el que termina la ejecucion
         end = time.time()
 
-        print("Se ha encontrado el camino en", (end-start) * 10**3, "ms y", self.manager.getTotalStates(), "estados con")
+        print("Se ha encontrado el camino en", (end-start) * 10**3, "ms y", self.manager.getTotalStates(), "estados")
         print(self.manager.getRoad())
 
     def h(self, node: str) -> int:

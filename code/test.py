@@ -1,4 +1,5 @@
 from a_star import A_Star
-from modules.LinkedList import LinkedList
+from modules.Environment import Environment
 
-L = LinkedList()
+E = Environment()
+print(E.getGroup("92719"))

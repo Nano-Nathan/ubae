@@ -1,5 +1,5 @@
 from a_star import A_Star
+from modules.Environment import Environment
 
-A = A_Star("1", "1000")
-
+A = A_Star("918743", "418")
 A.execute()
