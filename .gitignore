@@ -1,3 +1,2 @@
-/resources
-/code/__pycache__
-/code/modules/__pycache__
+**/node_modules
+**/__pycache__
