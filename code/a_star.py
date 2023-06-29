@@ -1,10 +1,70 @@
+from modules.Environment import Environment
+import heapq
+import math
+
+
+class AStar:
+    def __init__(self):
+        self.environment = Environment()
+
+    def heuristic(self, idNode1):
+        #Obtengo las coordenadas del nodo actual
+        nodeX, nodeY = self.environment.getCoordinates(idNode1)
+
+        #Retorno la distancia entre 2 puntos
+        return math.sqrt(
+            (nodeX - self.targetNodeX) ** 2 + 
+            (nodeY - self.targetNodeY) ** 2
+        )
+        # Implementa tu función heurística aquí
+        # Puedes utilizar distancias euclidianas u otras métricas según tus necesidades
+        # Retorna una estimación de la distancia entre los dos nodos (idNode1 y idNode2)
+        return 0
+
+    def findPath(self, startNode, endNode):
+        self.targetNodeX, self.targetNodeY = self.environment.getCoordinates(endNode)
+        openSet = []
+        cameFrom = {}
+        gScore = {startNode: 0}
+        fScore = {startNode: self.heuristic(startNode)}
+
+        heapq.heappush(openSet, (fScore[startNode], startNode))
+
+        while openSet:
+            current = heapq.heappop(openSet)[1]
+
+            if current == endNode:
+                return self.reconstructPath(cameFrom, current)
+
+            for neighbor in self.environment.getConnections(current):
+                tentative_gScore = gScore[current] + self.environment.getDistance(current, neighbor)
+
+                if neighbor not in gScore or tentative_gScore < gScore[neighbor]:
+                    cameFrom[neighbor] = current
+                    gScore[neighbor] = tentative_gScore
+                    fScore[neighbor] = tentative_gScore + self.heuristic(neighbor)
+                    heapq.heappush(openSet, (fScore[neighbor], neighbor))
+
+        return None
+
+    def reconstructPath(self, cameFrom, currentNode):
+        path = [currentNode]
+
+        while currentNode in cameFrom:
+            currentNode = cameFrom[currentNode]
+            path.append(currentNode)
+
+        path.reverse()
+        return path
+
+
+'''
 import math
 import time
 
 from modules.Environment import Environment
 from modules.LinkedList import LinkedList
 from modules.Manager import Manager
-
 
 class A_Star ():
     def __init__(self, initNode: str, targetNode: str) -> None:
@@ -72,4 +132,4 @@ class A_Star ():
             (nodeX - self.targetNodeX) ** 2 + 
             (nodeY - self.targetNodeY) ** 2
         )
-    
+    '''
