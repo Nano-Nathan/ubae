@@ -67,16 +67,19 @@ class Environment:
         #Obtiene los archivos con datos
         cFile = open(workingDirectory.split("ubae")[0] + 'ubae\\code\\modules\\data\\coordenadas.json')
         dFile = open(workingDirectory.split("ubae")[0] + 'ubae\\code\\modules\\data\\distancia.json')
+        gFile = open(workingDirectory.split("ubae")[0] + 'ubae\\code\\modules\\data\\grupos.json')
         #tFile = open(workingDirectory.split("ubae")[0] + 'ubae\\code\\modules\\data\\tiempo.json')
 
         #Guarda los datos en variables
         self.coordenadas = json.load(cFile)
         self.distancias = json.load(dFile)
+        self.grupos = json.load(gFile)
         #self.tiempos = json.load(tFile)
 
         #Cierra los archivos
         cFile.close()
         dFile.close()
+        gFile.close()
         #tFile.close()
     
     def getConnections (self, idNode: str) -> list:

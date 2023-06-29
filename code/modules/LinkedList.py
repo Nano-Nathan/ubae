@@ -42,7 +42,6 @@ class LinkedList:
 
     def priorityPushWithDelete(self, value: int, key: str, parent: str) -> None:
         newNode = self.Node(value, key, parent)
-        self.length += 1
         node = self.head
         #Si tiene elementos
         if(node):
@@ -50,6 +49,7 @@ class LinkedList:
             if (node.value >= value):
                 self.push(value, key, parent)
             else:
+                self.length += 1
                 while (node.next):
                     if(node.next.value >= value):
                         #Conecta con el nodo de adelante
@@ -72,13 +72,14 @@ class LinkedList:
                     if(not exist):
                         exist = True
                     else:
+                        self.length -= 1
                         nodeToDelete.prev.next = nodeToDelete.next
                         if(nodeToDelete.next):
                             nodeToDelete.next.prev = nodeToDelete.prev
                         other = True
                 nodeToDelete = nodeToDelete.next
-
         else:
+            self.length += 1
             self.head = newNode
 
     def pop (self) -> (tuple [int, str, str] | None):

@@ -2,19 +2,25 @@ class Manager():
     def __init__(self) -> None:
         #Nodos
         self.N = {}
+        #Cantidad de estados recorridos
+        self.states = 0
     
+    """ Estructura de los datos a guardar
+    {
+        'node1': {
+            'parent': parent
+            'totalWeight': peso desde el inicio hasta el
+        }
+    }
+    """
     def addNode (self, key:str, weight:int = 0, parent:str = '') -> None:
+
         #Guarda el ultimo nodo agregado
         self.lastNode = key
 
-        """ Estructura de los datos a guardar
-        {
-            'node1': {
-                'parent': parent
-                'totalWeight': totalWeight
-            }
-        }
-        """
+        #Agrega un estado
+        self.states += 1
+        
         #Si el nodo a agregar ya existe
         if(key in self.N):
             #Calcula el costo de llegar a el desde el nuevo padre
@@ -44,6 +50,9 @@ class Manager():
 
     def getParent (self, node: str):
         return self.N[node]['parent']
+
+    def getTotalStates (self):
+        return self.states
 
     def getTotalWeight (self, key:str) -> int:
         return self.N[key]['totalWeight']

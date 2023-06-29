@@ -1,4 +1,4 @@
-from a_star import A_Star
+from a_star import AStar
 
 A = A_Star("1", "1000")
 
