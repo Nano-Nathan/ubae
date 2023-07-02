@@ -115,9 +115,9 @@ app.get('/adyacentes/:id', (req, res) => {
                     distancia: adjacentNode.distancia
                 }
                 if (adjacentNode.id_nodo1 == nodeId) {
-                    object[node] = adjacentNode.id_nodo2
+                    object.node = adjacentNode.id_nodo2
                 } else {
-                    object[node] = adjacentNode.id_nodo1
+                    object.node = adjacentNode.id_nodo1
                 }
                 return object
             })
@@ -140,7 +140,7 @@ app.get('/distancia/:id1/:id2', (req, res) => {
     const id2 = req.params.id2;
 
     // Obtener la distancia entre los dos nodos de la base de datos
-    db.get('SELECT distancia FROM distancias WHERE id_nodo1 = ? AND id_nodo2 = ?', [id1, id2], (err, row) => {
+    db.get('SELECT distancia FROM distancias WHERE (id_nodo1 = ? AND id_nodo2 = ?) OR (id_nodo1 = ? AND id_nodo2 = ?)', [id1, id2, id2, id1], (err, row) => {
         if (err) {
             console.error(err);
             return res.status(500).json({ error: 'Error al obtener la distancia' });

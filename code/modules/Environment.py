@@ -10,7 +10,7 @@ class Environment:
         try:
             response = requests.get(url)
             if response.status_code == 200:
-                return [int(adyacente['nodo']['id']) for adyacente in response.json()['adyacentes']]
+                return [str(adyacente['node']) for adyacente in response.json()]
             else:
                 print('Error al obtener las conexiones:', response.status_code)
                 return []
@@ -20,7 +20,6 @@ class Environment:
 
     def getDistance(self, idNode1: str, idNode2: str) -> int:
         url = f'{self.base_url}/distancia/{idNode1}/{idNode2}'
-
         try:
             response = requests.get(url)
             if response.status_code == 200:
@@ -34,7 +33,6 @@ class Environment:
 
     def getCoordinates(self, idNode: str) -> tuple[int, int]:
         url = f'{self.base_url}/nodo/{idNode}'
-        print("Coordenadas de:", idNode)
         try:
             response = requests.get(url)
             if response.status_code == 200:
