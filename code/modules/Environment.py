@@ -4,17 +4,8 @@ class Environment:
     def __init__(self):
         self.base_url = "http://localhost:3000"
 
-    def getNodes(self) -> list:
-        url = f"{self.base_url}/nodos"
-        response = requests.get(url)
-        if response.status_code == 200:
-            return [int(node['id']) for node in response.json()]
-        else:
-            print("Error al obtener los nodos")
-            return []
-
     def getConnections(self, idNode: str) -> list:
-        url = f'{self.base_url}/nodos/{idNode}/adyacentes'
+        url = f'{self.base_url}/adyacentes/{idNode}'
 
         try:
             response = requests.get(url)
@@ -28,7 +19,7 @@ class Environment:
             return []
 
     def getDistance(self, idNode1: str, idNode2: str) -> int:
-        url = f'{self.base_url}/distancias/{idNode1}/{idNode2}'
+        url = f'{self.base_url}/distancia/{idNode1}/{idNode2}'
 
         try:
             response = requests.get(url)
@@ -42,7 +33,7 @@ class Environment:
             return -1
 
     def getCoordinates(self, idNode: str) -> tuple[int, int]:
-        url = f'{self.base_url}/nodos/{idNode}'
+        url = f'{self.base_url}/nodo/{idNode}'
         print("Coordenadas de:", idNode)
         try:
             response = requests.get(url)
