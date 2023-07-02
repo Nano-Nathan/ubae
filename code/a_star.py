@@ -1,6 +1,7 @@
 from modules.Environment import Environment
 import heapq
 import math
+import time
 
 
 class AStar:
@@ -17,7 +18,10 @@ class AStar:
 
     #Metodo para buscar el camino
     def findPath(self, startNode, endNode):
+        print("Nodo inicial:", startNode)
+        print("Nodo final:", endNode)
         self.targetNodeX, self.targetNodeY = self.environment.getCoordinates(endNode) #Guardo las coordenadas del nodo destino
+        
 
         queue = [] #Lista para guardar los nodos a visitar
 
@@ -26,16 +30,28 @@ class AStar:
         weights = {} #Peso desde el inicio hasta el indicado
 
         #Inicializacion
-        heapq.heappush(queue, (self.heuristic(startNode), startNode))
+        start = time.time() #Marca el tiempo de inicio
+        states = 0 #Contador con cantidad de estados
+        distance = self.heuristic(startNode)
+        heapq.heappush(queue, (distance, startNode))
         parents[startNode] = '0'
         weights[startNode] = 0
 
-        #Mientras haya nodos por visitar
-        while queue:
+        print("Distancia entre las coordenadas:", round(distance, 2))
+        print("Buscando el camino óptimo...")
+
+        while queue: #Mientras haya nodos por visitar
             current = heapq.heappop(queue)[1] #Obtiene el nodo actual
 
+            states += 1 #Aumenta la cantidad de estados recorrida
+
             if current == endNode:  #Si es el destino, genera la respuesta
-                return self.reconstructPath(parents, current)
+                print("Camino encontrado.")
+                timeE = round((time.time() - start) * 10**3, 4)
+                print("Tiempo de ejecución:", timeE, "ms") #Muestra el tiempo de ejecucion
+                print("Estados:", states) #Muestra la cantidad de estados recorridos
+                print("Costo:", weights[current]) #Muestra el costo de viaje
+                return states, timeE, weights[current], distance, self.reconstructPath(parents, current) #Estados, tiempos, costo, costo real, camino
 
             for neighbor in self.environment.getConnections(current): #Agrega los vecinos
 
@@ -56,8 +72,8 @@ class AStar:
         while currentNode != '0':
             path.insert(0, currentNode)
             currentNode = parents[currentNode]
-        print ("El camino que se debe seguir es:")
-        print (path)
+        #print ("El camino que se debe seguir es:")
+        #print (path)
         return path
 
 
