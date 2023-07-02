@@ -7,54 +7,57 @@ class AStar:
     def __init__(self):
         self.environment = Environment()
 
+    #Distancia entre 2 puntos
     def heuristic(self, idNode1):
-        #Obtengo las coordenadas del nodo actual
         nodeX, nodeY = self.environment.getCoordinates(idNode1)
-
-        #Retorno la distancia entre 2 puntos
         return math.sqrt(
             (nodeX - self.targetNodeX) ** 2 + 
             (nodeY - self.targetNodeY) ** 2
         )
-        # Implementa tu función heurística aquí
-        # Puedes utilizar distancias euclidianas u otras métricas según tus necesidades
-        # Retorna una estimación de la distancia entre los dos nodos (idNode1 y idNode2)
-        return 0
 
+    #Metodo para buscar el camino
     def findPath(self, startNode, endNode):
-        self.targetNodeX, self.targetNodeY = self.environment.getCoordinates(endNode)
-        openSet = []
-        cameFrom = {}
-        gScore = {startNode: 0}
-        fScore = {startNode: self.heuristic(startNode)}
+        self.targetNodeX, self.targetNodeY = self.environment.getCoordinates(endNode) #Guardo las coordenadas del nodo destino
 
-        heapq.heappush(openSet, (fScore[startNode], startNode))
+        queue = [] #Lista para guardar los nodos a visitar
 
-        while openSet:
-            current = heapq.heappop(openSet)[1]
+        #Diccionarios
+        parents = {} #Padres de cada nodo
+        weights = {} #Peso desde el inicio hasta el indicado
 
-            if current == endNode:
-                return self.reconstructPath(cameFrom, current)
+        #Inicializacion
+        heapq.heappush(queue, (self.heuristic(startNode), startNode))
+        parents[startNode] = '0'
+        weights[startNode] = 0
 
-            for neighbor in self.environment.getConnections(current):
-                tentative_gScore = gScore[current] + self.environment.getDistance(current, neighbor)
+        #Mientras haya nodos por visitar
+        while queue:
+            current = heapq.heappop(queue)[1] #Obtiene el nodo actual
 
-                if neighbor not in gScore or tentative_gScore < gScore[neighbor]:
-                    cameFrom[neighbor] = current
-                    gScore[neighbor] = tentative_gScore
-                    fScore[neighbor] = tentative_gScore + self.heuristic(neighbor)
-                    heapq.heappush(openSet, (fScore[neighbor], neighbor))
+            if current == endNode:  #Si es el destino, genera la respuesta
+                return self.reconstructPath(parents, current)
 
+            for neighbor in self.environment.getConnections(current): #Agrega los vecinos
+
+                if neighbor != parents[current]: #No valida el nodo padre
+                    
+                    weight = weights[current] + self.environment.getDistance(current, neighbor) # Valor: Peso desde el inicio + distancia entre el padre y el + heuristica
+                    
+                    if neighbor not in weights or weight < weights[neighbor]: # Agrega el nodo a visitar solo si no se ha visitado o posee un peso menor que antes
+                        parents[neighbor] = current
+                        weights[neighbor] = weight
+                        heapq.heappush(queue, (weight + self.heuristic(neighbor), neighbor)) #Agrega a la lista segun el peso y la heuristica
+
+        print("No se ha encontrado un camino.")
         return None
 
-    def reconstructPath(self, cameFrom, currentNode):
-        path = [currentNode]
-
-        while currentNode in cameFrom:
-            currentNode = cameFrom[currentNode]
-            path.append(currentNode)
-
-        path.reverse()
+    def reconstructPath(self, parents, currentNode):
+        path = []
+        while currentNode != '0':
+            path.insert(0, currentNode)
+            currentNode = parents[currentNode]
+        print ("El camino que se debe seguir es:")
+        print (path)
         return path
 
 
