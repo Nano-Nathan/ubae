@@ -2,21 +2,14 @@ const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const fs = require('fs');
 
-// Crear una nueva instancia de la aplicación Express
-const app = express();
-app.use(express.json());
-
-// Configurar la conexión a la base de datos SQLite
-const db = new sqlite3.Database('db/database.sqlite3');
-
-// Crear la tabla "nodos" en la base de datos
-db.serialize(() => {
-    db.run('CREATE TABLE nodos (id INTEGER PRIMARY KEY, coordenada_x INTEGER, coordenada_y INTEGER)');
-    db.run('CREATE TABLE distancias (id_nodo1 INTEGER, id_nodo2 INTEGER, distancia REAL)');
-});
-
 // Función para insertar los datos en la base de datos
-function insertarDatos() {
+function createDatabase() {
+    // Crear las tablas en la base de datos
+    db.serialize(() => {
+        db.run('CREATE TABLE nodos (id INTEGER PRIMARY KEY, coordenada_x INTEGER, coordenada_y INTEGER)');
+        db.run('CREATE TABLE distancias (id_nodo1 INTEGER, id_nodo2 INTEGER, distancia REAL)');
+    });
+
     // Ruta de los archivos de datos
     const coordenadasFile = './resources/coordenadas';
     const distanciasFile = './resources/distancias';
@@ -48,24 +41,37 @@ function insertarDatos() {
         console.log("Insertando distancias...")
         for (const distanciasLine of distanciasLines) {
             const [id_nodo1, id_nodo2, distancia] = distanciasLine.trim().split(' ');
-
-            db.get('SELECT * FROM distancias WHERE (id_nodo1 = ? and id_nodo2 = ?) or (id_nodo1 = ? and id_nodo2 = ?)', [id_nodo1, id_nodo2, id_nodo2, id_nodo1], (err, row) => {
-                if (!row) {
-                    db.run('INSERT INTO distancias (id_nodo1, id_nodo2, distancia) VALUES (?, ?, ?)', [id_nodo1, id_nodo2, distancia]);
-                }
-            });
+            db.run('INSERT INTO distancias (id_nodo1, id_nodo2, distancia) VALUES (?, ?, ?)', [id_nodo1, id_nodo2, distancia]);
         }
-
         db.run('COMMIT');
     });
 }
 
-// Insertar los datos en la base de datos al iniciar el contenedor
-insertarDatos();
+// Crear una nueva instancia de la aplicación Express
+const app = express();
+app.use(express.json());
 
+// Configurar la conexión a la base de datos SQLite
+const db = new sqlite3.Database('db/database.sqlite3');
+
+// Verifica si la tabla 'nodos' existe
+db.get("SELECT name FROM sqlite_master WHERE type='table' AND name='nodos'", (error, row) => {
+    if (error) {
+        console.error('Error al verificar la existencia de la base de datos:', error);
+        return;
+    }
+
+    if (row) {
+        console.log('La base de datos existe');
+    } else {
+        console.log('La base de datos no existe, se genera.');
+        // Insertar los datos en la base de datos
+        createDatabase();
+    }
+});
 
 // Endpoint para obtener un único nodo
-app.get('/nodos/:id', (req, res) => {
+app.get('/nodo/:id', (req, res) => {
     const nodeId = req.params.id;
 
     // Obtener el nodo de la base de datos
@@ -84,7 +90,7 @@ app.get('/nodos/:id', (req, res) => {
 });
 
 // Endpoint para obtener un nodo y sus adyacentes con sus respectivas distancias
-app.get('/nodos/:id/adyacentes', (req, res) => {
+app.get('/adyacentes/:id', (req, res) => {
     const nodeId = req.params.id;
 
     // Obtener el nodo y sus adyacentes de la base de datos
@@ -103,15 +109,15 @@ app.get('/nodos/:id/adyacentes', (req, res) => {
                 console.error(err);
                 return res.status(500).json({ error: 'Error al obtener los nodos adyacentes' });
             }
-            
+
             const result = rows.map(adjacentNode => {
                 object = {
                     distancia: adjacentNode.distancia
                 }
-                if(adjacentNode.id_nodo1 == nodeId){
-                    object[node] = adjacentNode.id_nodo2
+                if (adjacentNode.id_nodo1 == nodeId) {
+                    object.node = adjacentNode.id_nodo2
                 } else {
-                    object[node] = adjacentNode.id_nodo1
+                    object.node = adjacentNode.id_nodo1
                 }
                 return object
             })
@@ -129,12 +135,12 @@ app.get('/nodos/:id/adyacentes', (req, res) => {
 });
 
 // Endpoint para obtener la distancia entre dos nodos
-app.get('/distancias/:id1/:id2', (req, res) => {
+app.get('/distancia/:id1/:id2', (req, res) => {
     const id1 = req.params.id1;
     const id2 = req.params.id2;
 
     // Obtener la distancia entre los dos nodos de la base de datos
-    db.get('SELECT distancia FROM distancias WHERE id_nodo1 = ? AND id_nodo2 = ?', [id1, id2], (err, row) => {
+    db.get('SELECT distancia FROM distancias WHERE (id_nodo1 = ? AND id_nodo2 = ?) OR (id_nodo1 = ? AND id_nodo2 = ?)', [id1, id2, id2, id1], (err, row) => {
         if (err) {
             console.error(err);
             return res.status(500).json({ error: 'Error al obtener la distancia' });
@@ -151,4 +157,12 @@ app.get('/distancias/:id1/:id2', (req, res) => {
 // Iniciar el servidor en el puerto 3000
 app.listen(3000, () => {
     console.log('Servidor iniciado en el puerto 3000');
+});
+
+// Agrega un evento para el cierre del servidor
+process.on('SIGINT', () => {
+    console.log('Servidor finalizado');
+    // Cerrar la conexión con la base de datos
+    db.close();
+    process.exit(0);
 });

@@ -1,5 +1,5 @@
 from a_star import AStar
 
-A = A_Star("1", "1000")
+A = AStar()
 
-A.execute()
+A.findPath("1", "264346")
