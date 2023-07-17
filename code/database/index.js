@@ -3,6 +3,63 @@ const sqlite3 = require('sqlite3').verbose();
 const fs = require('fs');
 
 // Función para insertar los datos en la base de datos
+const readline = require('readline');
+
+// Función para insertar los datos en la base de datos
+function createDatabase() {
+    // Crear las tablas en la base de datos
+    db.serialize(() => {
+        db.run('CREATE TABLE nodos (id INTEGER PRIMARY KEY, coordenada_x INTEGER, coordenada_y INTEGER)');
+        db.run('CREATE TABLE distancias (id_nodo1 INTEGER, id_nodo2 INTEGER, distancia REAL)');
+    });
+
+    // Ruta de los archivos de datos
+    const coordenadasFile = './resources/coordenadas';
+    const distanciasFile = './resources/distancias';
+
+    // Leer el archivo de coordenadas
+    const coordenadasStream = fs.createReadStream(coordenadasFile);
+    const coordenadasRl = readline.createInterface({
+        input: coordenadasStream,
+        crlfDelay: Infinity
+    });
+
+    coordenadasRl.on('line', (linea) => {
+        const [id, coordenada_x, coordenada_y] = linea.trim().split(' ');
+
+        db.run('INSERT INTO nodos (id, coordenada_x, coordenada_y) VALUES (?, ?, ?)', [id, coordenada_x, coordenada_y]);
+    });
+
+    coordenadasRl.on('close', () => {
+        console.log('Lectura del archivo de coordenadas finalizada.');
+    });
+
+    coordenadasRl.on('error', (error) => {
+        console.error('Error al leer el archivo de coordenadas:', error);
+    });
+
+    // Leer el archivo de distancias
+    const distanciasStream = fs.createReadStream(distanciasFile);
+    const distanciasRl = readline.createInterface({
+        input: distanciasStream,
+        crlfDelay: Infinity
+    });
+
+    distanciasRl.on('line', (linea) => {
+        const [id_nodo1, id_nodo2, distancia] = linea.trim().split(' ');
+
+        db.run('INSERT INTO distancias (id_nodo1, id_nodo2, distancia) VALUES (?, ?, ?)', [id_nodo1, id_nodo2, distancia]);
+    });
+
+    distanciasRl.on('close', () => {
+        console.log('Lectura del archivo de distancias finalizada.');
+    });
+
+    distanciasRl.on('error', (error) => {
+        console.error('Error al leer el archivo de distancias:', error);
+    });
+}
+/*
 function createDatabase() {
     // Crear las tablas en la base de datos
     db.serialize(() => {
@@ -45,7 +102,7 @@ function createDatabase() {
         }
         db.run('COMMIT');
     });
-}
+}*/
 
 // Crear una nueva instancia de la aplicación Express
 const app = express();
