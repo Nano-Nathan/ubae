@@ -6,5 +6,5 @@
 /code/database/resources/distancias
 /code/database/resources/distancias.txt
 /code/database/resources/distancias-unparsed.txt
-/code/database/db/database.sqlite3
+/code/database/db/database**.sqlite3
 /code/database/db/database.sqlite3-journal
