@@ -18,8 +18,8 @@ class AStar:
 
     #Metodo para buscar el camino
     def findPath(self, startNode, endNode):
-        print("Nodo inicial:", startNode)
-        print("Nodo final:", endNode)
+        #print("Nodo inicial:", startNode)
+        #print("Nodo final:", endNode)
         self.targetNodeX, self.targetNodeY = self.environment.getCoordinates(endNode) #Guardo las coordenadas del nodo destino
         
 
@@ -37,8 +37,8 @@ class AStar:
         parents[startNode] = '0'
         weights[startNode] = 0
 
-        print("Distancia entre las coordenadas:", round(distance, 2))
-        print("Buscando el camino óptimo...")
+        #print("Distancia entre las coordenadas:", round(distance, 2))
+        #print("Buscando el camino óptimo...")
 
         while queue: #Mientras haya nodos por visitar
             current = heapq.heappop(queue)[1] #Obtiene el nodo actual
@@ -46,11 +46,11 @@ class AStar:
             states += 1 #Aumenta la cantidad de estados recorrida
 
             if current == endNode:  #Si es el destino, genera la respuesta
-                print("Camino encontrado.")
+                #print("Camino encontrado.")
                 timeE = round((time.time() - start) * 10**3, 4)
-                print("Tiempo de ejecución:", timeE, "ms") #Muestra el tiempo de ejecucion
-                print("Estados:", states) #Muestra la cantidad de estados recorridos
-                print("Costo:", weights[current]) #Muestra el costo de viaje
+                #print("Tiempo de ejecución:", timeE, "ms") #Muestra el tiempo de ejecucion
+                #print("Estados:", states) #Muestra la cantidad de estados recorridos
+                #print("Costo:", weights[current]) #Muestra el costo de viaje
                 return states, timeE, weights[current], distance, self.reconstructPath(parents, current) #Estados, tiempos, costo, costo real, camino
 
             for neighbor in self.environment.getConnections(current): #Agrega los vecinos
@@ -64,7 +64,7 @@ class AStar:
                         weights[neighbor] = weight
                         heapq.heappush(queue, (weight + self.heuristic(neighbor), neighbor)) #Agrega a la lista segun el peso y la heuristica
 
-        print("No se ha encontrado un camino.")
+        #print("No se ha encontrado un camino.")
         return None
 
     def reconstructPath(self, parents, currentNode):
@@ -72,8 +72,8 @@ class AStar:
         while currentNode != '0':
             path.insert(0, currentNode)
             currentNode = parents[currentNode]
-        #print ("El camino que se debe seguir es:")
-        #print (path)
+        ##print ("El camino que se debe seguir es:")
+        ##print (path)
         return path
 
 
@@ -102,7 +102,7 @@ class A_Star ():
         self.targetNodeX, self.targetNodeY = self.Environment.getCoordinates(targetNode)
 
     def execute (self) -> None:
-        print("Busando el camino óptimo...")
+        #print("Busando el camino óptimo...")
         #Tiempo en el que empieza
         start = time.time()
 
@@ -139,8 +139,8 @@ class A_Star ():
         #Tiempo en el que termina la ejecucion
         end = time.time()
 
-        print("Se ha encontrado el camino en", (end-start) * 10**3, "ms y", self.manager.getTotalStates(), "estados")
-        print(self.manager.getRoad())
+        #print("Se ha encontrado el camino en", (end-start) * 10**3, "ms y", self.manager.getTotalStates(), "estados")
+        #print(self.manager.getRoad())
 
     def h(self, node: str) -> int:
         #Obtengo las coordenadas del nodo actual
