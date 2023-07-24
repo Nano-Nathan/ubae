@@ -22,4 +22,4 @@ def generate_pairs(start, end):
         for i in range(0, to_select, 2):
             file.write(f"{selected_nums[i]} {selected_nums[i + 1]}\n")
 
-generate_pairs(1, 23947347)
+generate_pairs(1, 264346)
