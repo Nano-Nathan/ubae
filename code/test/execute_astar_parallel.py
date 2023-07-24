@@ -39,7 +39,7 @@ def main():
     is_created = False
 
     # Cantidad de workers a utilizar
-    num_workers = 12
+    num_workers = 10
     worker_threads = []
 
     # Cola de tareas
@@ -49,7 +49,7 @@ def main():
         while True:
             # Rellena la cola hasta que alcance el tamaño máximo
             with task_queue_mutex:
-                print("\nINFO: Rellena la queue.\n")
+                print(f"INFO: Rellena la queue. Elementos actuales: {task_queue.qsize()}")
                 while not task_queue.full():
                     line = input_file.readline().strip()
                     if line == "":
@@ -70,8 +70,8 @@ def main():
                     thread.start()
                 is_created = True
 
-            # Espera 60 segundos antes de rellenar la cola nuevamente
-            time.sleep(60)
+            # Espera 30 minutos antes de rellenar la cola nuevamente
+            time.sleep(1800)
     
 
     # Avisa a los workers que finalicen su ejecución
