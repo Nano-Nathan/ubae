@@ -1,51 +1,7 @@
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const fs = require('fs');
-
-// Función para insertar los datos en la base de datos
-function createDatabase() {
-    // Crear las tablas en la base de datos
-    db.serialize(() => {
-        db.run('CREATE TABLE nodos (id INTEGER PRIMARY KEY, coordenada_x INTEGER, coordenada_y INTEGER)');
-        db.run('CREATE TABLE distancias (id_nodo1 INTEGER, id_nodo2 INTEGER, distancia REAL)');
-    });
-
-    // Ruta de los archivos de datos
-    const coordenadasFile = './resources/coordenadas';
-    const distanciasFile = './resources/distancias';
-
-    // Leer el archivo de coordenadas
-    const coordenadasData = fs.readFileSync(coordenadasFile, 'utf8');
-    const coordenadasLines = coordenadasData.trim().split('\n');
-
-    // Leer el archivo de distancias
-    const distanciasData = fs.readFileSync(distanciasFile, 'utf8');
-    const distanciasLines = distanciasData.trim().split('\n');
-
-    // Insertar las coordenadas en la base de datos
-    db.serialize(() => {
-        db.run('BEGIN TRANSACTION');
-        console.log("Insertando nodos...")
-        for (const coordenadasLine of coordenadasLines) {
-            const [id, coordenada_x, coordenada_y] = coordenadasLine.trim().split(' ');
-
-            db.run('INSERT INTO nodos (id, coordenada_x, coordenada_y) VALUES (?, ?, ?)', [id, coordenada_x, coordenada_y]);
-        }
-
-        db.run('COMMIT');
-    });
-
-    // Insertar las distancias en la base de datos
-    db.serialize(() => {
-        db.run('BEGIN TRANSACTION');
-        console.log("Insertando distancias...")
-        for (const distanciasLine of distanciasLines) {
-            const [id_nodo1, id_nodo2, distancia] = distanciasLine.trim().split(' ');
-            db.run('INSERT INTO distancias (id_nodo1, id_nodo2, distancia) VALUES (?, ?, ?)', [id_nodo1, id_nodo2, distancia]);
-        }
-        db.run('COMMIT');
-    });
-}
+const readline = require('readline');
 
 // Crear una nueva instancia de la aplicación Express
 const app = express();
@@ -54,18 +10,76 @@ app.use(express.json());
 // Configurar la conexión a la base de datos SQLite
 const db = new sqlite3.Database('db/database.sqlite3');
 
+// Crear las tablas en la base de datos
+db.serialize(() => {
+    db.run('CREATE TABLE IF NOT EXISTS nodos (id INTEGER PRIMARY KEY, coordenada_x INTEGER, coordenada_y INTEGER)');
+    db.run('CREATE TABLE IF NOT EXISTS distancias (id_nodo1 INTEGER, id_nodo2 INTEGER, distancia REAL)');
+});
+
+// Función para insertar los datos en la base de datos
+async function createDatabase() {
+    //Metodo para insertar datos
+    var insertData = (RL, table, columns) => {
+        var //splitter = 0,
+            columnsParsed = columns.join(","),
+            values = "?".repeat(columns.length).split("").join(",");
+        console.log(`Insertando ${table}...`)
+        console.log("Begin transaction")
+        db.run('BEGIN TRANSACTION');
+        db.serialize(() => {
+            RL.on('line', (linea) => {
+                db.run(`INSERT INTO ${table} (${columnsParsed}) VALUES (${values})`, linea.trim().split(' '), (err) => { if (err && err.errno != 19) console.log(err) });
+            });
+        })
+        return new Promise((resolve, reject) => {
+            RL.on('close', () => {
+                console.log("End commit")
+                resolve()
+                db.run('COMMIT', (err) => {
+                    if (err) {
+                        console.error(`Error al insertar ${table}:`, err);
+                        reject(err);
+                    } else {
+                        console.log(`Inserción de ${table} completada.`);
+                        resolve();
+                    }
+                });
+            });
+        });
+    }
+
+    // Ruta de los archivos de datos
+    const coordenadasFile = './resources/coordenadas';
+    const distanciasFile = './resources/distancias';
+
+    // Leer el archivo de coordenadas
+    const coordenadasStream = fs.createReadStream(coordenadasFile);
+    const coordenadasRl = readline.createInterface({
+        input: coordenadasStream,
+        crlfDelay: Infinity
+    });
+    await insertData(coordenadasRl, "nodos", ['id', 'coordenada_x', 'coordenada_y']);
+
+    // Leer el archivo de distancias
+    const distanciasStream = fs.createReadStream(distanciasFile);
+    const distanciasRl = readline.createInterface({
+        input: distanciasStream,
+        crlfDelay: Infinity
+    });
+    await insertData(distanciasRl, "distancias", ['id_nodo1', 'id_nodo2', 'distancia']);
+}
+
 // Verifica si la tabla 'nodos' existe
-db.get("SELECT name FROM sqlite_master WHERE type='table' AND name='nodos'", (error, row) => {
+db.get("SELECT COUNT(*) AS count FROM distancias", (error, row) => {
     if (error) {
         console.error('Error al verificar la existencia de la base de datos:', error);
         return;
     }
 
-    if (row) {
+    if (row.count) {
         console.log('La base de datos existe');
     } else {
         console.log('La base de datos no existe, se genera.');
-        // Insertar los datos en la base de datos
         createDatabase();
     }
 });
@@ -120,14 +134,7 @@ app.get('/adyacentes/:id', (req, res) => {
                     object.node = adjacentNode.id_nodo1
                 }
                 return object
-            })
-            /*,a = {
-                nodo: nodeRow,
-                adyacentes: rows.map(adjacentNode => ({
-                    nodo: adjacentNode,
-                    distancia: adjacentNode.distancia
-                }))
-            }*/;
+            });
 
             res.json(result);
         });
