@@ -45,7 +45,7 @@ def main():
     # Cola de tareas
     task_queue = queue.Queue(max_task_queue_size)
 
-    with open("pairs.txt", "r") as input_file:
+    with open("missing_results.txt", "r") as input_file:
         while True:
             # Rellena la cola hasta que alcance el tamaño máximo
             with task_queue_mutex:
