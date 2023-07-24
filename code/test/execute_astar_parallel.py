@@ -70,8 +70,8 @@ def main():
                     thread.start()
                 is_created = True
 
-            # Espera 30 minutos antes de rellenar la cola nuevamente
-            time.sleep(1800)
+            # Espera 60 minutos antes de rellenar la cola nuevamente
+            time.sleep(3600)
     
 
     # Avisa a los workers que finalicen su ejecución
