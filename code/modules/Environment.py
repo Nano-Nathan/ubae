@@ -2,15 +2,23 @@ import requests
 
 class Environment:
     def __init__(self):
+        self.adyacentes = {}
+        self.coordenadas = {}
+        self.distancias = {}
         self.base_url = "http://localhost:3000"
 
     def getConnections(self, idNode: str) -> list:
-        url = f'{self.base_url}/adyacentes/{idNode}'
+        
+        if idNode in self.adyacentes:
+            return self.adyacentes[idNode]
 
+        url = f'{self.base_url}/adyacentes/{idNode}'
         try:
             response = requests.get(url)
             if response.status_code == 200:
-                return [str(adyacente['node']) for adyacente in response.json()]
+                values = [str(adyacente['node']) for adyacente in response.json()]
+                self.adyacentes[idNode] = values
+                return values
             else:
                 print('Error al obtener las conexiones:', response.status_code)
                 return []
@@ -19,10 +27,16 @@ class Environment:
             return []
 
     def getDistance(self, idNode1: str, idNode2: str) -> int:
+        if idNode1 in self.distancias:
+            return self.distancias[idNode1]
+        if idNode2 in self.distancias:
+            return self.distancias[idNode2]
+
         url = f'{self.base_url}/distancia/{idNode1}/{idNode2}'
         try:
             response = requests.get(url)
             if response.status_code == 200:
+                self.distancias[idNode1] = response.json()['distancia']
                 return response.json()['distancia']
             else:
                 print('Error al obtener la distancia:', response.status_code)
@@ -32,11 +46,15 @@ class Environment:
             return -1
 
     def getCoordinates(self, idNode: str) -> tuple[int, int]:
+        if idNode in self.coordenadas:
+            return self.coordenadas[idNode]
+
         url = f'{self.base_url}/nodo/{idNode}'
         try:
             response = requests.get(url)
             if response.status_code == 200:
                 node_data = response.json()
+                self.coordenadas[idNode] = (node_data['coordenada_x'], node_data['coordenada_y'])
                 return node_data['coordenada_x'], node_data['coordenada_y']
             else:
                 print('Error al obtener las coordenadas:', response.status_code)
