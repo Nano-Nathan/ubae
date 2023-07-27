@@ -1,7 +1,8 @@
+
 def mapear_coordenadas(archivo_entrada, archivo_salida):
     nodos = {}
     i = 0
-    with open(archivo_entrada, 'r') as f_in, open(archivo_salida, 'w') as f_out:
+    with open(archivo_entrada,'r') as f_in, open(archivo_salida, 'w') as f_out:
         for linea in f_in:
             try:
                 letra, nodo1, nodo2, distancia = linea.strip().split()
