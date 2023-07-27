@@ -3,21 +3,15 @@
 - `db/`: Carpeta que contiene base de datos SQLite con los datos ya cargados.
 - `resources/`: Carpeta que contiene los datos y el programa que se utiliza para minimizarlos.
 
-## Requisitos
-
-Versión mínima de [NodeJS](https://nodejs.org/es/download) instalada: 18.16.1
-
-Versión mínima de [Python](https://www.python.org/downloads/) instalada: 3.11.4
-
-## Datos
+## Generación de datos
 
 Si se desea cambiar el set de datos se deben seguir los siguientes pasos:
 
-1) Descargar el set deseado desde [aquí](http://www.diag.uniroma1.it//challenge9/download.shtml). Los únicos archivos necesarios son los que se encuentran en la columna Distance graph y Coordinates como muestra la siguiente imagen.
+1) Descargar el set deseado desde [aquí](http://www.diag.uniroma1.it//challenge9/download.shtml). Los únicos archivos necesarios son los que se encuentran en la columna Distance graph y Coordinates como muestra la siguiente imagen:
 
 <img src="./public/tabla_datos.png"/>
 
-2) Una vez se descarguen los archivos requeridos, se deben descomprimir y cambiar el nombre de cada uno a distancias-unparsed.txt y coordenadas.txt respectivamente.
+2) Una vez se descarguen los archivos requeridos, se deben descomprimir y cambiar el nombre de cada uno a **distancias-unparsed.txt** y **coordenadas.txt** respectivamente.
 
 3) Luego de poseer estos archivos, se deben insertar en la carpeta `resources/` donde se encuentran los archivos [delete.py](./resources/delete.py) y [parse.py](./resources/parse.py).
 
