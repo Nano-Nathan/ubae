@@ -62,7 +62,7 @@ class AStar:
                     if neighbor not in weights or weight < weights[neighbor]: # Agrega el nodo a visitar solo si no se ha visitado o posee un peso menor que antes
                         parents[neighbor] = current
                         weights[neighbor] = weight
-                        heapq.heappush(queue, (weight + self.heuristic(neighbor), neighbor)) #Agrega a la lista segun el peso y la heuristica
+                        heapq.heappush(queue, (self.heuristic(neighbor), neighbor)) #Agrega a la lista segun el peso y la heuristica
 
         #print("No se ha encontrado un camino.")
         return None

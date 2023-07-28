@@ -4,16 +4,17 @@ import queue
 import time
 
 sys.path.append('..')
-from ag import Agen
+from a_star import AStar
 
 # Mutex para sincronizar el acceso a la cola de tareas y al archivo de resultados
 task_queue_mutex = threading.Lock()
 file_mutex = threading.Lock()
 
 # Cantidad máxima de elementos en la cola de tareas
-max_task_queue_size = 50
+max_task_queue_size = 240
 
 def worker(worker_id, task_queue):
+    A = AStar()
     while True:
         # Obtiene el siguiente par de nodos de manera excusiva
         with task_queue_mutex:
@@ -25,13 +26,12 @@ def worker(worker_id, task_queue):
             break
         
         #Ejecuta el algoritmo
-        A = Agen()
         num1, num2 = pair
-        estados, tiempo, costo, distancia_real,recorrido, encontro = A.findPath(num1, num2)
+        estados, tiempo, costo, distancia_real, _ = A.findPath(num1, num2)
 
         #Escribe el resultado en el archivo de manera exclusiva
         with file_mutex, open("results.txt", "a") as output_file:
-            output_file.write(f"{num1} {num2} {estados} {tiempo} {costo} {distancia_real} {recorrido} {encontro} \n")
+            output_file.write(f"{num1};{num2};{estados};{tiempo};{costo};{distancia_real}\n")
             print(f"{worker_id}: Escribe el resultado.")
 
 def main():
