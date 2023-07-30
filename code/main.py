@@ -6,5 +6,5 @@ from ag import Agen
 
 B = Agen()
 
-D=B.findPath(81873,50351)
+D=B.findPath(13,1107)
 print(D)
