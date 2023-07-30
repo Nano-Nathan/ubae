@@ -4,7 +4,7 @@ import time
 import random
 mutationprob=0.6
 cantdein=10
-cantdenodes=60
+cantdenodes=20
 iteraciones=100
 class Agen:
     def __init__(self):
@@ -23,11 +23,17 @@ class Agen:
         fit=0
         fitant=0
         fitnew=0
+        fitnesprom=[]
+        fp=0
         while i<iteraciones:
             #Las ordeno por menor fitness
+            for p in pob:
+                fp+=p[0]
+            fp=fp/cantdein
+            fitnesprom.append(fp)
+            fp=0
             bestpo=sorted(pob,key=lambda pob:pob[0])
             fitnew=bestpo[0][0]
-            
             #selecciono una cantidad reducida
             parent=self.selection(bestpo,4)
             #de la cantidad reducida hago el cruzamiento
@@ -42,7 +48,7 @@ class Agen:
             else:
                 fit=0
             fitant=fitnew
-            if self.verificacion(pob):
+            if fitnew==0:
                 print("Camino encontrado.")
                 solucion=True
                 break
@@ -57,7 +63,7 @@ class Agen:
         print("Estados:", i) #Muestra la cantidad de estados recorridos
         print("Costo:", weight[0]) #Muestra el costo de viaje
 
-        return(i,timeE,weight[0],camino[0],camino[1],solucion)
+        return(i,timeE,weight[0],camino[0],camino[1],solucion,fitnesprom)
 
     def generacamino(self,cantdenodes,hijo,signode=None):
         #Si hay mutacion el camino se genera desde donde se corto, sino se crea desde el principio
@@ -173,14 +179,6 @@ class Agen:
             if child!=False:
                 newchildren.append(self.fitness(child))
         return newchildren
-    
-    def verificacion(self,pobl):
-        #verifica si el camino esta conectado
-        list=(self.environment.getConnections(self.endNode))
-        for i in pobl:
-            j=i[1]
-            if j[len(pobl[1])-2]in list:
-                return True
             
     def generarpoblacion (self,maxpop,cantdenodes):
         #genera la poblacion 
