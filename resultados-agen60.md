@@ -1,5 +1,4 @@
 Nodo inicial|   Nodo final|   Tiempos (ms)|   Tiempos (seg)|   Tiempos (min)|   Tiempos (hh)|   Costo|   Poblaciones|   Distancia entre Nodo final y ultimo encontrado
-Muestra resultados con maxímo de 60 nodos por individuo
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 204557|   189419|   360160.7399|   360.16 |   6.00 |   0.10|   14072 |   1 |   0.00
 58303 |   106038|   181468.3144|   181.47 |   3.02 |   0.05|   6920  |   1 |   0.00
