@@ -81,7 +81,7 @@ El funcionamiento del algoritmo genético es el siguiente:
 
 2. **Evaluación de la aptitud (función de adaptación):** Se evalúa la aptitud de cada solución candidata en la población. La función de adaptación determina qué tan buena es cada solución en términos de la calidad de la solución al problema dado.
 
-3. **Selección:** Se seleccionan soluciones candidatas para reproducirse y formar la próxima generación. Las soluciones con una aptitud más alta tienen una mayor probabilidad de ser seleccionadas, pero incluso las soluciones menos aptas tienen una pequeña posibilidad de ser elegidas para mantener la diversidad.
+3. **Selección:** Se seleccionan soluciones candidatas para reproducirse y formar la próxima generación. Las soluciones con una aptitud más alta son las que quedan seleccionadas.
 
 4. **Reproducción:** Las soluciones seleccionadas se combinan para crear nuevas soluciones candidatas (descendencia). Esto se puede hacer mediante operadores genéticos como cruces (crossover) y recombinaciones, que mezclan características de los padres para formar soluciones hijas.
 
@@ -132,7 +132,7 @@ Una vez que los programas estuvieron listos, se procedió a ejecutar los algorit
 
 ## Resultados finales
 
-Para finalizar esta sección se muestran algunos resultados en forma de tablas y gráficos con sus respectivos análisis.
+
 
 ### Resultados algoritmo A*
 
@@ -141,6 +141,12 @@ A continuación se muestran graficos que representan resultados de la ejecución
 
 ### Resultados algoritmo genético
 
+A continuación se muestran graficos que representan resultados de la ejecución del algoritmo genetico.Dichos resultados se muestran en las tablas [`resultados-agen20`](resultados-agen20.md), [`resultados-agen40`](resultados-agen40.md),[`resultados-agen60`](resultados-agen60.md).
+
+Tambien se muestra una comparación con una ejecución random se encuentra en la tabla [`resultados-agen-random`](resultados-agen-random.md)
+
 # Análisis y discusión de los resultados
 # Conclusiones finales
 # Bibliografía
+
+[def]: resultados-agen-random.md
