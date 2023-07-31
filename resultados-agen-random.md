@@ -1,4 +1,5 @@
 Muestra con máximo de 20 nodos
+
 Nodo inicial|  Nodo final|  Distancia entre Nodo final y ultimo encontrado|  Random sin repeticiones|  Random con repeticiones
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 158060|  212582|  0.00     |  276973.92|  275530.18
@@ -53,6 +54,7 @@ Nodo inicial|  Nodo final|  Distancia entre Nodo final y ultimo encontrado|  Ran
 259365|  126066|  809876.01|  830653.86|  824939.54
 
 Muestra con máximo de 40 nodos
+
 Nodo inicial|  Nodo final|  Distancia entre Nodo final y ultimo encontrado|  Random sin repeticiones|  Random con repeticiones
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 166368|  156868|  0.00|  144704.55|  142213.01
@@ -107,6 +109,7 @@ Nodo inicial|  Nodo final|  Distancia entre Nodo final y ultimo encontrado|  Ran
 259365|  126066|  772945.05|  828537.40|  827732.58
 
 Muestra con máximo de 60 nodos
+
 Nodo inicial|  Nodo final|  Distancia entre Nodo final y ultimo encontrado|  Random sin repeticiones|  Random con repeticiones
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 204557|  189419|  0.00|  167587.25|  161802.37
