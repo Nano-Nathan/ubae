@@ -1,7 +1,7 @@
 Muestra con máximo de 20 nodos
 
 Nodo inicial|  Nodo final|  Distancia entre Nodo final y ultimo encontrado|  Random sin repeticiones|  Random con repeticiones
-|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+|:-:|:-:|:-:|:-:|:-:|
 158060|  212582|  0.00     |  276973.92|  275530.18
 214983|  70324 |  0.00     |  431254.16|  430520.11
 101767|  76503 |  0.00     |  640493.96|  639798.89
