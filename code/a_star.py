@@ -18,8 +18,8 @@ class AStar:
 
     #Metodo para buscar el camino
     def findPath(self, startNode, endNode):
-        #print("Nodo inicial:", startNode)
-        #print("Nodo final:", endNode)
+        print("Nodo inicial:", startNode)
+        print("Nodo final:", endNode)
         self.targetNodeX, self.targetNodeY = self.environment.getCoordinates(endNode) #Guardo las coordenadas del nodo destino
         
 
@@ -28,6 +28,7 @@ class AStar:
         #Diccionarios
         parents = {} #Padres de cada nodo
         weights = {} #Peso desde el inicio hasta el indicado
+        F = {} #Funcion = peso + heuristica
 
         #Inicializacion
         start = time.time() #Marca el tiempo de inicio
@@ -36,9 +37,10 @@ class AStar:
         heapq.heappush(queue, (distance, startNode))
         parents[startNode] = '0'
         weights[startNode] = 0
+        F[startNode] = 0
 
-        #print("Distancia entre las coordenadas:", round(distance, 2))
-        #print("Buscando el camino óptimo...")
+        print("Distancia entre las coordenadas:", round(distance, 2))
+        print("Buscando el camino óptimo...")
 
         while queue: #Mientras haya nodos por visitar
             current = heapq.heappop(queue)[1] #Obtiene el nodo actual
@@ -46,25 +48,34 @@ class AStar:
             states += 1 #Aumenta la cantidad de estados recorrida
 
             if current == endNode:  #Si es el destino, genera la respuesta
-                #print("Camino encontrado.")
+                print("Camino encontrado.")
                 timeE = round((time.time() - start) * 10**3, 4)
-                #print("Tiempo de ejecución:", timeE, "ms") #Muestra el tiempo de ejecucion
-                #print("Estados:", states) #Muestra la cantidad de estados recorridos
-                #print("Costo:", weights[current]) #Muestra el costo de viaje
+                print("Tiempo de ejecución:", timeE, "ms") #Muestra el tiempo de ejecucion
+                print("Estados:", states) #Muestra la cantidad de estados recorridos
+                print("Costo:", weights[current]) #Muestra el costo de viaje
                 return states, timeE, weights[current], distance, self.reconstructPath(parents, current) #Estados, tiempos, costo, costo real, camino
-
+            
             for neighbor in self.environment.getConnections(current): #Agrega los vecinos
-
                 if neighbor != parents[current]: #No valida el nodo padre
                     
                     weight = weights[current] + self.environment.getDistance(current, neighbor) # Valor: Peso desde el inicio + distancia entre el padre y el + heuristica
-                    
-                    if neighbor not in weights or weight < weights[neighbor]: # Agrega el nodo a visitar solo si no se ha visitado o posee un peso menor que antes
-                        parents[neighbor] = current
-                        weights[neighbor] = weight
-                        heapq.heappush(queue, (self.heuristic(neighbor), neighbor)) #Agrega a la lista segun el peso y la heuristica
+                    f = weight + self.heuristic(neighbor) # Suma el costo total hasta el nodo + distancia hasta el nodo final = Costo estimado de la solución
 
-        #print("No se ha encontrado un camino.")
+                    # Si fue analizado y ahora posee una menor euristica, se actualizan los datos sino se descarta
+                    if not neighbor in F:
+                        weights[neighbor] = weight
+                        parents[neighbor] = current
+                        F[neighbor] = f
+                        heapq.heappush(queue, (f, neighbor))
+
+                    else :
+                        if f < F[neighbor]:
+                            parents[neighbor] = current
+                            weights[neighbor] = weight
+                            F[neighbor] = f
+                            heapq.heappush(queue, (f, neighbor)) #Agrega a la lista segun el peso y la heuristica
+
+        print("No se ha encontrado un camino.")
         return None
 
     def reconstructPath(self, parents, currentNode):
@@ -72,8 +83,8 @@ class AStar:
         while currentNode != '0':
             path.insert(0, currentNode)
             currentNode = parents[currentNode]
-        ##print ("El camino que se debe seguir es:")
-        ##print (path)
+        print ("El camino que se debe seguir es:")
+        print (path)
         return path
 
 

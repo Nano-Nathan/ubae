@@ -1,9 +1,5 @@
 # UBAE - Comparación A* y algoritmo genético
 
-### Integrantes:
-- Serrano Cristian
-- Espejo Fabricio
-
 ## Tabla de contenido
 - [Introducción](#introducción)
 - [Marco teórico](#marco-teórico)
@@ -15,10 +11,12 @@
       - [Modelado](#modelado)
       - [Manipulación de Datos](#manipulación-de-datos)
       - [Testing](#testing)
-   - [Resultados finales](#resultados-finales)
+   - [Resultados algoritmo A*](#resultados-algoritmo-a)
+   - [Resultados algoritmo genético](#resultados-algoritmo-genético)
 - [Análisis y discusión de los resultados](#análisis-y-discusión-de-los-resultados)
 - [Conclusiones finales](#conclusiones-finales)
 - [Bibliografía](#bibliografía)
+- [Integrantes](#integrantes)
 
 
 # Introducción
@@ -130,23 +128,43 @@ Para finalizar, se desarrollaron varios programas en Python que llevaron a cabo 
 
 Una vez que los programas estuvieron listos, se procedió a ejecutar los algoritmos. Se detectó cierta lentitud en la búsqueda de resultados, por lo que se implementó un programa capaz de buscar varios caminos en paralelo. Esto permitió optimizar el tiempo de búsqueda y obtener los datos necesarios para el análisis de los resultados.
 
-## Resultados finales
+## Resultados algoritmo A*
 
+En esta sección se muestran graficos que representan resultados de la ejecución del algoritmo A*. Dichos resultados se basan en los datos de la tabla [`resultados-astar`](./public/resultados-astar.md) la cual ha sido generada a partir de las ejecuciones experimentales correspondientes.
 
+Según los datos que se muestran en la *Figura 1* podemos deducir que, a medida que incrementa la distancia entre los nodos que se desean conectar, el tiempo de ejecución también aumenta significativamente. Además de demostrar que la distancia del camino encontrado no se encuentra muy lejos de la distancia euclidiana (distancia teórica).
 
-### Resultados algoritmo A*
+<div style="text-align: center;">
+   <img src="./public/img/distancias_astar.svg" alt="text"/>
+   <em>Figura 1. Distancia real y euclidiana entre los nodos frente a tiempos de ejecución en milisegundos.</em>
+</div>
+<br/>
 
-A continuación se muestran graficos que representan resultados de la ejecución del algoritmo A*. Dichos resultados se muestran en la tabla [`resultados-astar`](resultados-astar.md)
+También se evidencian algunos casos particulares en los que existe una distancia relativamente corta entre los nodos, pero aún así el algoritmo demora hasta 25 minutos (1.500.000 milisegundos) para encontrar el camino. Este se debe a que el objetivo del algoritmo A* es descubrir el camino más óptimo, incluso si eso implica revisar una mayor cantidad de nodos.
 
+Esta relación entre cantidad de estados recorridos y el tiempo de resolución puede verse claramente en la *Figura 2*. Allí, puede verse claramente la tendencia alcista que posee dicha relación.
 
-### Resultados algoritmo genético
+<div style="text-align: center;">
+   <img src="./public/img/estados_astar.svg"/>
+   <em>Figura 2. Cantidad de estados recorridos frente a tiempos de ejecución en segundos.</em>
+</div>
 
-A continuación se muestran graficos que representan resultados de la ejecución del algoritmo genetico.Dichos resultados se muestran en las tablas [`resultados-agen20`](resultados-agen20.md), [`resultados-agen40`](resultados-agen40.md),[`resultados-agen60`](resultados-agen60.md).
+## Resultados algoritmo genético
 
-Tambien se muestra una comparación con una ejecución random se encuentra en la tabla [`resultados-agen-random`](resultados-agen-random.md)
+A continuación se muestran graficos que representan resultados de la ejecución del algoritmo genetico. Dichos resultados se muestran en las tablas [`resultados-agen20`](./public/resultados-agen20.md), [`resultados-agen40`](./public/resultados-agen40.md),[`resultados-agen60`](./public/resultados-agen60.md).
+
+Tambien se muestra una comparación con una ejecución random se encuentra en la tabla [`resultados-agen-random`](./public/resultados-agen-random.md)
 
 # Análisis y discusión de los resultados
 # Conclusiones finales
 # Bibliografía
 
-[def]: resultados-agen-random.md
+*Artificial intelligence: a modern approach*, 2nd edition. Stuart Russell, Peter Norvig.
+
+*Artificial intelligence: a modern approach*, 3rd edition. Stuart Russell, Peter Norvig.
+
+*Material de cátedra.*
+
+# Integrantes
+- ### Serrano, Cristian
+- ### Espejo, Fabricio
