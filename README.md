@@ -159,6 +159,7 @@ Según los datos que se muestran en la *Figura 3* podemos observar de la distanc
    <img src="./public/img/Relacion Costo con distancia final.svg"/>
    <em>Figura 3. Distancia real y costo del camino encontrado frente a tiempos de ejecución en segundos.</em>
 </div>
+<br/>
 
 A continuación en la *Figura 4* se muestra la cantidad de poblaciones que se generaron a través del tiempo, en la cual se aprecia que la cantidad de poblaciones a través del tiempo aumenta irregularmente.
 
@@ -166,6 +167,7 @@ A continuación en la *Figura 4* se muestra la cantidad de poblaciones que se ge
    <img src="./public/img/Relacion poblacion con el tiempo.svg"/>
    <em>Figura 4. Poblaciones frente a tiempos de ejecución en segundos.</em>
 </div>
+<br/>
 
 ### Comparativas 
 
@@ -175,6 +177,7 @@ Se realizaron testeos y se recolectaron datos de los fitness para promediar su c
    <img src="./public/img/Promedio Fitness a través de las poblaciones(máximo 20 nodos por individuo).svg"/>
    <em>Figura 5. Fitness promedio frente a poblaciones(máximo 20 nodos).</em>
 </div>
+<br/>
 
 <div style="text-align: center;">
    <img src="./public/img/Promedio Fitness a través de las poblaciones(máximo 40 nodos por individuo).svg"/>
@@ -185,6 +188,8 @@ Se realizaron testeos y se recolectaron datos de los fitness para promediar su c
    <img src="./public/img/Promedio Fitness a través de las poblaciones(máximo 40 nodos por individuo).svg"/>
    <em>Figura 7. Fitness promedio frente a poblaciones(máximo 60 nodos).</em>
 </div>
+<br/>
+
 
 Tambien se muestra una comparación con una ejecución random se encuentra en la tabla [`resultados-agen-random`](./public/resultados-agen-random.md). En las *Figuras 8,9 y 10* se aprecia que la diferencia es mínima cuando los individuos están limitados a solo 20 nodos, pero cada vez es mayor el límite de nodos por individuo la diferencia incrementa como se puede ver en las figuras siguientes
 
@@ -202,6 +207,7 @@ Tambien se muestra una comparación con una ejecución random se encuentra en la
    <img src="./public/img/Comparacion A gen con random con maximo de 20 nodos.svg"/>
    <em>Figura 8. Comparativa Algoritmo genético vs random(máximo 60 nodos).</em>
 </div>
+<br/>
 
 # Análisis y discusión de los resultados
 # Conclusiones finales
