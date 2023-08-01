@@ -151,9 +151,9 @@ Esta relación entre cantidad de estados recorridos y el tiempo de resolución p
 
 ## Resultados algoritmo genético
 
-A continuación se muestran graficos que representan resultados de la ejecución del algoritmo genético. Dichos resultados se muestran en las tablas [`resultados-agen20`](./public/resultados-agen20.md), [`resultados-agen40`](./public/resultados-agen40.md),[`resultados-agen60`](./public/resultados-agen60.md).
+A continuación se muestran graficos que representan resultados de la ejecución del algoritmo genético. Dichos resultados se basan en los datos ingresados sobre las tablas [`resultados-agen20`](./public/resultados-agen20.md), [`resultados-agen40`](./public/resultados-agen40.md) y [`resultados-agen60`](./public/resultados-agen60.md).
 
-Según los datos que se muestran en la *Figura 3* podemos observar de la distancia a la cúal queda el algotitmo y el costo del camino generado, haya o no llegado a su solución.
+Según los datos que se muestran en la *Figura 3* podemos observar la distancia a la cúal queda el algotitmo y el costo del camino generado, haya o no llegado a su solución.
 
 <div style="text-align: center;">
    <img src="./public/img/Relacion Costo con distancia final.svg"/>
@@ -161,7 +161,7 @@ Según los datos que se muestran en la *Figura 3* podemos observar de la distanc
 </div>
 <br/>
 
-A continuación en la *Figura 4* se muestra la cantidad de poblaciones que se generaron a través del tiempo, en la cual se aprecia que la cantidad de poblaciones a través del tiempo aumenta irregularmente.
+A continuación, en la *Figura 4* se muestra la cantidad de poblaciones que se generaron a través del tiempo, en la cual se aprecia que esta aumenta irregularmente a través del tiempo.
 
 <div style="text-align: center;">
    <img src="./public/img/Relacion poblacion con el tiempo.svg"/>
@@ -171,7 +171,7 @@ A continuación en la *Figura 4* se muestra la cantidad de poblaciones que se ge
 
 ### Comparativas 
 
-Se realizaron testeos y se recolectaron datos de los fitness para promediar su comportamiento con el paso de las poblaciones.Como se muestra en las *Figuras 5,6 y 7* se puede apreciar como el fitness va bajando con cada población en las poblaciones con un tope mayor de nodos la diferencia es mas grande.
+Se realizaron testeos y se recolectaron datos de los fitness para promediar su comportamiento con el paso de las poblaciones. En las *Figuras 5, 6 y 7* se puede apreciar como el fitness disminuye con cada población y en las poblaciones con un tope mayor de nodos la diferencia es mas grande.
 
 <div style="text-align: center;">
    <img src="./public/img/Promedio Fitness a través de las poblaciones(máximo 20 nodos por individuo).svg"/>
@@ -192,7 +192,7 @@ Se realizaron testeos y se recolectaron datos de los fitness para promediar su c
 <br/>
 
 
-Tambien se muestra una comparación con una ejecución random se encuentra en la tabla [`resultados-agen-random`](./public/resultados-agen-random.md). En las *Figuras 8,9 y 10* se aprecia que la diferencia es mínima cuando los individuos están limitados a solo 20 nodos, pero cada vez es mayor el límite de nodos por individuo la diferencia incrementa como se puede ver en las figuras siguientes
+Tambien se muestra una comparación con una búsqueda random del camino. Dichos datos se basan en los resultados descriptos en la tabla [`resultados-agen-random`](./public/resultados-agen-random.md). En las *Figuras 8, 9 y 10* se aprecia que la diferencia es mínima cuando los individuos están limitados a solo 20 nodos, pero a medida que aumenta el límite de nodos por individuo la diferencia incrementa.
 
 <div style="text-align: center;">
    <img src="./public/img/Comparacion A gen con random con maximo de 20 nodos.svg"/>
@@ -213,17 +213,34 @@ Tambien se muestra una comparación con una ejecución random se encuentra en la
 <br/>
 
 # Análisis y discusión de los resultados
+
+Como se ha mencionado previamente, en base a los resultados obtenidos, se puede inferir que el algoritmo A* es altamente efectivo cuando se aplica en casos donde la distancia entre los nodos es corta, ya que permite encontrar el camino óptimo en cuestión de segundos. Por otro lado, el algoritmo genético muestra resultados menos satisfactorios, ya que en la mayoría de los casos solo logra obtener una aproximación de la solución final, sin alcanzar la precisión deseada.
+
+Es importante destacar que el algoritmo genético presenta una buena aproximación en casos donde el camino es extremadamente largo en tiempos de ejecución relativamente cortos. Esta ventaja no se encuentra en el algoritmo A*, ya que encontrar el camino óptimo en tales situaciones puede llevar hasta varios días, lo cual no es recomendable para el propósito del desarrollo en este caso específico.
+
+Otra ventaja significativa del algoritmo genético es su capacidad para finalizar la ejecución si no considera viable encontrar el camino buscado. Distinto es el caso para el algoritmo A* quien es capaz de analizar todos los nodos y concluir que no existe un camino posible.
+
 # Conclusiones finales
 
-A la larga el algoritmo genético puede obtener una respuesta más rápida pero no puede ser la deseada ya que evita bucles y busca una solución rápida y no óptima. En cambio el algoritmo * busca la solución óptima cueste lo que cueste  
+Para concluir, se presentan diversas opciones a seguir en este proyecto.
+
+La primera opción consiste en utilizar el proyecto UBAE con el algoritmo A* para ciudades pequeñas. Esto para garantizar tiempos de búsqueda reducidos y la satisfacción del usuario final.
+
+La segunda opción sería desarrollar un programa que utilice el algoritmo genético para obtener una aproximación del camino en viajes más largos, y luego completarlo utilizando el algoritmo A* para mejorar la precisión.
+
+La tercera opción, más teórica, implica ajustar los parámetros del algoritmo genético según el entorno para optimizar su búsqueda. Dado que este algoritmo permite cierta flexibilidad, se podrían implementar enfoques específicos. Por ejemplo, en ciudades con muchas calles e intersecciones, podríamos limitar la selección de nodos a una zona entre los nodos A y B, donde es más probable encontrar el camino.
+
+Otro enfoque sería aplicar una parametrización especial en recorridos largos que incluyan varias ciudades. En lugar de cruzar todos los nodos del grafo, podríamos seleccionar puntos principales de cada ciudad a recorrer, como la capital.
+
+Es importante tener en cuenta que, aunque se utilizaron datos reales de Estados Unidos, estos presentaban errores y no tenían un formato amigable, lo que dificultó su modelado. Para abordar este problema, se podría realizar un análisis más profundo de los datos del entorno y modelarlos de manera conveniente para mejorar la ejecución de los algoritmos. Por ejemplo, agrupar los datos por ubicación, seleccionar nodos relevantes para los caminos posibles, y eliminar nodos redundantes que se encuentren entre el camino de otros, ya que no aportarían información adicional y disminuiría la cantidad de nodos a analizar.
 
 # Bibliografía
 
-*Artificial intelligence: a modern approach*, 2nd edition. Stuart Russell, Peter Norvig.
+[1] *Stuart Russell & Peter Norvig (2004). Artificial intelligence: a modern approach, 2nd edition.*
 
-*Artificial intelligence: a modern approach*, 3rd edition. Stuart Russell, Peter Norvig.
+[2] *Stuart Russell & Peter Norvig (2009). Artificial intelligence: a modern approach, 3rd edition.*
 
-*Material de cátedra.*
+[3] *Material de cátedra.*
 
 # Integrantes
 - ### Serrano, Cristian
