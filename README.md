@@ -151,12 +151,63 @@ Esta relación entre cantidad de estados recorridos y el tiempo de resolución p
 
 ## Resultados algoritmo genético
 
-A continuación se muestran graficos que representan resultados de la ejecución del algoritmo genetico. Dichos resultados se muestran en las tablas [`resultados-agen20`](./public/resultados-agen20.md), [`resultados-agen40`](./public/resultados-agen40.md),[`resultados-agen60`](./public/resultados-agen60.md).
+A continuación se muestran graficos que representan resultados de la ejecución del algoritmo genético. Dichos resultados se muestran en las tablas [`resultados-agen20`](./public/resultados-agen20.md), [`resultados-agen40`](./public/resultados-agen40.md),[`resultados-agen60`](./public/resultados-agen60.md).
 
-Tambien se muestra una comparación con una ejecución random se encuentra en la tabla [`resultados-agen-random`](./public/resultados-agen-random.md)
+Según los datos que se muestran en la *Figura 3* podemos observar de la distancia a la cúal queda el algotitmo y el costo del camino generado, haya o no llegado a su solución.
+
+<div style="text-align: center;">
+   <img src="./public/img/Relacion Costo con distancia final.svg"/>
+   <em>Figura 3. Distancia real y costo del camino encontrado frente a tiempos de ejecución en segundos.</em>
+</div>
+
+A continuación en la *Figura 4* se muestra la cantidad de poblaciones que se generaron a través del tiempo, en la cual se aprecia que la cantidad de poblaciones a través del tiempo aumenta irregularmente.
+
+<div style="text-align: center;">
+   <img src="./public/img/Relacion poblacion con el tiempo.svg"/>
+   <em>Figura 4. Poblaciones frente a tiempos de ejecución en segundos.</em>
+</div>
+
+### Comparativas 
+
+Se realizaron testeos y se recolectaron datos de los fitness para promediar su comportamiento con el paso de las poblaciones.Como se muestra en las *Figuras 5,6 y 7* se puede apreciar como el fitness va bajando con cada población en las poblaciones con un tope mayor de nodos la diferencia es mas grande.
+
+<div style="text-align: center;">
+   <img src="./public/img/Promedio Fitness a través de las poblaciones(máximo 20 nodos por individuo).svg"/>
+   <em>Figura 5. Fitness promedio frente a poblaciones(máximo 20 nodos).</em>
+</div>
+
+<div style="text-align: center;">
+   <img src="./public/img/Promedio Fitness a través de las poblaciones(máximo 40 nodos por individuo).svg"/>
+   <em>Figura 6. Fitness promedio frente a poblaciones(máximo 40 nodos).</em>
+</div>
+
+<div style="text-align: center;">
+   <img src="./public/img/Promedio Fitness a través de las poblaciones(máximo 40 nodos por individuo).svg"/>
+   <em>Figura 7. Fitness promedio frente a poblaciones(máximo 60 nodos).</em>
+</div>
+
+Tambien se muestra una comparación con una ejecución random se encuentra en la tabla [`resultados-agen-random`](./public/resultados-agen-random.md). En las *Figuras 8,9 y 10* se aprecia que la diferencia es mínima cuando los individuos están limitados a solo 20 nodos, pero cada vez es mayor el límite de nodos por individuo la diferencia incrementa como se puede ver en las figuras siguientes
+
+<div style="text-align: center;">
+   <img src="./public/img/Comparacion A gen con random con maximo de 20 nodos.svg"/>
+   <em>Figura 8. Comparativa Algoritmo genético vs random(máximo 20 nodos).</em>
+</div>
+
+<div style="text-align: center;">
+   <img src="./public/img/Comparacion A gen con random con maximo de 20 nodos.svg"/>
+   <em>Figura 8. Comparativa Algoritmo genético vs random(máximo 40 nodos).</em>
+</div>
+
+<div style="text-align: center;">
+   <img src="./public/img/Comparacion A gen con random con maximo de 20 nodos.svg"/>
+   <em>Figura 8. Comparativa Algoritmo genético vs random(máximo 60 nodos).</em>
+</div>
 
 # Análisis y discusión de los resultados
 # Conclusiones finales
+
+A la larga el algoritmo genético puede obtener una respuesta más rápida pero no puede ser la deseada ya que evita bucles y busca una solución rápida y no óptima. En cambio el algoritmo * busca la solución óptima cueste lo que cueste  
+
 # Bibliografía
 
 *Artificial intelligence: a modern approach*, 2nd edition. Stuart Russell, Peter Norvig.
