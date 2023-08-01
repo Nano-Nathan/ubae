@@ -165,6 +165,7 @@ A continuación en la *Figura 4* se muestra la cantidad de poblaciones que se ge
 
 <div style="text-align: center;">
    <img src="./public/img/Relacion poblacion con el tiempo.svg"/>
+   <br/>
    <em>Figura 4. Poblaciones frente a tiempos de ejecución en segundos.</em>
 </div>
 <br/>
@@ -185,7 +186,7 @@ Se realizaron testeos y se recolectaron datos de los fitness para promediar su c
 </div>
 
 <div style="text-align: center;">
-   <img src="./public/img/Promedio Fitness a través de las poblaciones(máximo 40 nodos por individuo).svg"/>
+   <img src="./public/img/Promedio Fitness a través de las poblaciones(máximo 60 nodos por individuo).svg"/>
    <em>Figura 7. Fitness promedio frente a poblaciones(máximo 60 nodos).</em>
 </div>
 <br/>
@@ -199,13 +200,13 @@ Tambien se muestra una comparación con una ejecución random se encuentra en la
 </div>
 
 <div style="text-align: center;">
-   <img src="./public/img/Comparacion A gen con random con maximo de 20 nodos.svg"/>
-   <em>Figura 8. Comparativa Algoritmo genético vs random(máximo 40 nodos).</em>
+   <img src="./public/img/Comparacion A gen con random con maximo de 40 nodos.svg"/>
+   <em>Figura 9. Comparativa Algoritmo genético vs random(máximo 40 nodos).</em>
 </div>
 
 <div style="text-align: center;">
-   <img src="./public/img/Comparacion A gen con random con maximo de 20 nodos.svg"/>
-   <em>Figura 8. Comparativa Algoritmo genético vs random(máximo 60 nodos).</em>
+   <img src="./public/img/Comparacion A gen con random con maximo de 60 nodos.svg"/>
+   <em>Figura 10. Comparativa Algoritmo genético vs random(máximo 60 nodos).</em>
 </div>
 <br/>
 
