@@ -75,7 +75,6 @@ class Agen:
             list=(self.environment.getConnections(node))
             for i in list:
                 if i!=signode:
-                    
                     hijo.append(i)
                     node=i
                     break
@@ -183,7 +182,6 @@ class Agen:
     def generarpoblacion (self,maxpop,cantdenodes):
         #genera la poblacion 
         poblacion=[]
-        node=self.startNode
         for i in range(maxpop):
             poblacion.append(self.individuo(cantdenodes))
         return poblacion
